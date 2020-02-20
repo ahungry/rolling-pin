@@ -1,15 +1,41 @@
+const jsonFlat = {}
 const jsonFile = document.getElementById('json-file')
 let json = {
   "app": {
-    "name": "My Test",
+    "name": {
+      "first": "My",
+      "second": "App",
+      "someArray": [1, 2, 3]
+    },
     "date": "Today"
   }
+}
+
+function renderTree (parent, m, path = []) {
+  const keys = Object.keys(m)
+
+  keys.forEach(k => {
+    const el = document.createElement('div')
+
+    el.title = [...path, k].join('.')
+    el.className = 'tree-key'
+    el.innerHTML = k
+
+    parent.appendChild(el)
+
+    const val = m[k]
+
+    if ('object' === typeof val) {
+      renderTree(el, val, [...path, k])
+    }
+  })
 }
 
 function renderJson () {
   const node = document.getElementById('code')
 
-  node.innerHTML = JSON.stringify(json, undefined, 4)
+  renderTree(node, json)
+  // node.innerHTML = JSON.stringify(json, undefined, 4)
 }
 
 function boot () {

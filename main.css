@@ -1,5 +1,5 @@
 html, body {
-  font-size: 1.2rem;
+  font-size: 1.0rem;
 }
 
 #code {
@@ -7,4 +7,8 @@ html, body {
   color: #af0;
   display: block;
   padding: 10px;
+}
+
+.tree-key {
+  padding-left: 20px;
 }
