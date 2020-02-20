@@ -43,12 +43,55 @@ function setVal (m, path, val) {
   next[keys.reverse().slice(0, 1)] = val
 }
 
+function upFirst (s) {
+  const first = s[0].toUpperCase()
+
+  return first + s.slice(1)
+}
+
+function getDefaultAlias (path) {
+  const node = document.getElementById('auto-name')
+  const autoName = node.value
+  const parts = path.split('.')
+
+  switch (autoName) {
+    case 'short-snake':
+      const shortParts1 = parts.reverse().slice(0, 3).reverse()
+
+      return shortParts1.join('_')
+
+    case 'short-camel':
+      const shortParts = parts.reverse().slice(0, 3).reverse()
+
+      return shortParts[0] + shortParts.slice(1).map(upFirst).join('')
+
+    case 'long-snake':
+      return parts.join('_')
+
+    case 'long-camel':
+      return parts[0] + parts.slice(1).map(upFirst).join('')
+
+    case 'short':
+    default:
+      return parts.reverse().slice(0, 1)
+  }
+}
+
 function loadedJsonOnClick (e) {
   const path = e.target.title
-  const alias = prompt('Choose your new path: ', path.replace(/\./g, '_'))
-  pathAliases.push([path, alias])
+  const alias = prompt(
+    'Choose your new path: ',
+    getDefaultAlias(path),
+  )
   const val = makeVal(json, path)
 
+  if ('object' === typeof val) {
+    alert('Only scalars supported for now, please try clicking the end of a branch/set of nodes.')
+
+    return
+  }
+
+  pathAliases.push([path, alias])
   flatJson[alias] = val
   renderFlatJson()
   renderAliases()
