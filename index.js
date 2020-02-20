@@ -8,32 +8,20 @@ let json = {
       "fullName": "Matthew Carter",
       "uuid": "abc-123"
     },
-    "head": {
-      "eyes": [
-        {
-          "hint": "click 'color' and enter leftEyeColor in the prompt",
-          "type": "left",
-          "color": "blue"
-        },
-        {
-          "hint": "click 'color' and enter rightEyeColor in the prompt",
-          "type": "right",
-          "color": "blue"
+    "physicalCharacteristics": {
+      "head": {
+        "eyes": {
+          "left": {
+            "hint": "Click 'color' and enter 'leftEye' in the prompt.",
+            "color": "blue"
+          },
+          "right": {
+            "hint": "Click 'color' and enter 'rightEye' in the prompt.",
+            "color": "blue"
+          }
         }
-      ],
-      "ears": [
-        {
-          "hint": "click 'size' and enter leftEarSize in the prompt",
-          "type": "left",
-          "size": "medium"
-        },
-        {
-          "hint": "click 'size' and enter rightEarSize in the prompt",
-          "type": "right",
-          "size": "medium"
-        }
-      ]
-    },
+      }
+    }
   }
 }
 
