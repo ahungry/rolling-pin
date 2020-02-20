@@ -3,6 +3,11 @@ const jsonFile = document.getElementById('json-file')
 const pathAliases = []
 let json = {
   "person": {
+    "identifyingInformation": {
+      "hint": "Click 'name' and enter idName in the prompt.",
+      "name": "Matthew Carter",
+      "uuid": "abc-123"
+    },
     "head": {
       "eyes": [
         {
@@ -29,10 +34,6 @@ let json = {
         }
       ]
     },
-    "name": {
-      "first": "Matthew",
-      "last": "Carter"
-    }
   }
 }
 
