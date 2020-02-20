@@ -56,12 +56,12 @@ function getDefaultAlias (path) {
 
   switch (autoName) {
     case 'short-snake':
-      const shortParts1 = parts.reverse().slice(0, 3).reverse()
+      const shortParts1 = parts.reverse().slice(0, 2).reverse()
 
       return shortParts1.join('_')
 
     case 'short-camel':
-      const shortParts = parts.reverse().slice(0, 3).reverse()
+      const shortParts = parts.reverse().slice(0, 2).reverse()
 
       return shortParts[0] + shortParts.slice(1).map(upFirst).join('')
 
