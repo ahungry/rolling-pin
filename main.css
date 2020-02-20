@@ -2,13 +2,26 @@ html, body {
   font-size: 1.0rem;
 }
 
-#code {
+.code {
   background: #333;
-  color: #af0;
+  color: #fa0;
   display: block;
+  font-family: monospace;
   padding: 10px;
 }
 
+.code pre {
+  margin: 0;
+}
+
 .tree-key {
-  padding-left: 20px;
+  color: #fff;
+  display: block;
+  padding-left: 30px;
+  cursor: pointer;
+}
+
+.tk-active {
+  background-image: linear-gradient(to right, rgba(0, 155, 0, 0.5), transparent );
+  color: #af0;
 }
