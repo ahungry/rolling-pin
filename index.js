@@ -3,7 +3,7 @@ const jsonFile = document.getElementById('json-file')
 const pathAliases = []
 let json = {
   "person": {
-    "identifyingInformation": {
+    "info": {
       "hint": "Click 'name' and enter name in the prompt, then 'uuid' and enter 'id'.",
       "fullName": "Matthew Carter",
       "uuid": "abc-123"
@@ -53,15 +53,16 @@ function getDefaultAlias (path) {
   const node = document.getElementById('auto-name')
   const autoName = node.value
   const parts = path.split('.')
+  const ctxLevel = Number(document.getElementById('short-context-level').value)
 
   switch (autoName) {
     case 'short-snake':
-      const shortParts1 = parts.reverse().slice(0, 2).reverse()
+      const shortParts1 = parts.reverse().slice(0, ctxLevel).reverse()
 
       return shortParts1.join('_')
 
     case 'short-camel':
-      const shortParts = parts.reverse().slice(0, 2).reverse()
+      const shortParts = parts.reverse().slice(0, ctxLevel).reverse()
 
       return shortParts[0] + shortParts.slice(1).map(upFirst).join('')
 
