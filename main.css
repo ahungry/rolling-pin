@@ -1,3 +1,11 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: Iosevka;
+  /* https://raw.githubusercontent.com/be5invis/Iosevka/master/LICENSE.md */
+  src: url("iosevka-term-regular.woff") format("woff");
+}
+
 html, body {
   font-size: 1.0rem;
 }
@@ -6,7 +14,8 @@ html, body {
   background: #333;
   color: #fff;
   display: block;
-  font-family: monospace;
+  font-family: Iosevka, monospace;
+  font-size: 0.9rem;
   height: 300px;
   overflow-y: scroll;
   padding: 10px;
@@ -19,6 +28,8 @@ html, body {
 .tree-key {
   color: #fff;
   display: block;
+  font-family: sans-serif;
+  padding: 3px;
   padding-left: 30px;
   cursor: pointer;
 }
