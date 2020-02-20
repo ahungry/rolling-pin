@@ -1,0 +1,10 @@
+html, body {
+  font-size: 1.2rem;
+}
+
+#code {
+  background: #333;
+  color: #af0;
+  display: block;
+  padding: 10px;
+}
