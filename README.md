@@ -3,6 +3,8 @@
 
 Flatten out nasty nested JSON into something simpler and smoother.
 
+Try it out at: http://rolling-pin.ahungry.com/
+
 Interactively (GUI) turn this:
 
 ```json
