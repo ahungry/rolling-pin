@@ -4,8 +4,8 @@ const pathAliases = []
 let json = {
   "person": {
     "identifyingInformation": {
-      "hint": "Click 'name' and enter idName in the prompt.",
-      "name": "Matthew Carter",
+      "hint": "Click 'name' and enter name in the prompt, then 'uuid' and enter 'id'.",
+      "fullName": "Matthew Carter",
       "uuid": "abc-123"
     },
     "head": {
@@ -37,13 +37,60 @@ let json = {
   }
 }
 
-function makeVal (path) {
+function makeVal (m, path) {
   const keys = path.split('.')
 
-  return keys.reduce((acc, cur) => acc[cur], json)
+  return keys.reduce((acc, cur) => acc[cur], m)
 }
 
-function renderTree (parent, m, path = []) {
+function setVal (m, path, val) {
+  const keys = path.split('.')
+  let next = m
+
+  for (let i = 0; i < keys.length - 1; i++) {
+    next = next[keys[i]]
+  }
+
+  // Stop at the last object, as those are by reference, while individual keys are not.
+  next[keys.reverse().slice(0, 1)] = val
+}
+
+function loadedJsonOnClick (e) {
+  const path = e.target.title
+  const alias = prompt('Choose your new path: ', path.replace(/\./g, '_'))
+  pathAliases.push([path, alias])
+  const val = makeVal(json, path)
+
+  flatJson[alias] = val
+  renderFlatJson()
+  renderAliases()
+}
+
+function getOriginalPath (path) {
+  let orig = ''
+
+  pathAliases.forEach(([a, b]) => {
+    if (b === path) {
+      orig = a
+    }
+  })
+
+  return orig
+}
+
+function flatJsonOnClick (e) {
+  const path = e.target.title
+  const val = makeVal(flatJson, path)
+  const newVal = prompt('Choose a new value to set this to: ', val)
+  const origPath = getOriginalPath(path)
+
+  setVal(flatJson, path, newVal)
+  setVal(json, origPath, newVal)
+  renderJson()
+  renderFlatJson()
+}
+
+function renderTree (onClick, parent, m, path = []) {
   const keys = Object.keys(m)
 
   keys.forEach(k => {
@@ -64,27 +111,18 @@ function renderTree (parent, m, path = []) {
       e.target.className = 'tree-key'
     }
 
-    el.onclick = (e) => {
-      const path = e.target.title
-      const alias = prompt('Choose your new path: ', path.replace(/\./g, '_'))
-      pathAliases.push([path, alias])
-      const val = makeVal(path)
-
-      flatJson[alias] = val
-      renderFlatJson()
-      renderAliases()
-    }
+    el.onclick = onClick
 
     parent.appendChild(el)
 
     if ('object' === typeof val) {
       if (Array.isArray(val)) {
         el.innerHTML += '['
-        renderTree(el, val, [...path, k])
+        renderTree(onClick, el, val, [...path, k])
         el.innerHTML += ']'
       } else {
         el.innerHTML += '{'
-        renderTree(el, val, [...path, k])
+        renderTree(onClick, el, val, [...path, k])
         el.innerHTML += '}'
       }
     } else {
@@ -97,14 +135,14 @@ function renderJson () {
   const node = document.getElementById('code')
   node.innerHTML = ''
 
-  renderTree(node, json)
+  renderTree(loadedJsonOnClick, node, json)
 }
 
 function renderFlatJson () {
   const node = document.getElementById('clean-code')
   node.innerHTML = ''
 
-  renderTree(node, flatJson)
+  renderTree(flatJsonOnClick, node, flatJson)
 }
 
 function renderAliases () {
