@@ -11,6 +11,7 @@ function slurp (filename, cb) {
 
 function handler (url) {
   switch (url) {
+    case '/version': return cb => cb(undefined, '0.0.1')
     case '/index.js': return cb => slurp('index.js', cb)
     case '/main.css': return cb => slurp('main.css', cb)
     case '/':
