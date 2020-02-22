@@ -13,9 +13,14 @@ function slurp (filename, cb) {
 
 function handler (url, req = undefined) {
   switch (url) {
-    case '/version': return cb => cb(undefined, '0.0.1')
-    case '/index.js': return cb => slurp('index.js', cb)
-    case '/main.css': return cb => slurp('main.css', cb)
+    case '/version': return cb => cb(undefined, JSON.stringify({ version: '0.0.1' }))
+
+    // Just load the basic file.
+    case '/iosevka-term-regular.woff':
+    case '/index.js':
+    case '/main.css':
+      return cb => slurp(url.slice(1), cb)
+
     case '/':
       return cb => slurp('index.html', cb)
     default:
