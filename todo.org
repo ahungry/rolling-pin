@@ -1,3 +1,5 @@
 * TODO Set up automatic transform invocation based on url to FS matching
 
 * TODO Abstract proxy further (ring-like middleware layers?)
+
+* TODO Handle proxying for non 80/443 ports (pull it from domain)
