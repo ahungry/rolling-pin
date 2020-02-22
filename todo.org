@@ -1,0 +1,3 @@
+* TODO Set up automatic transform invocation based on url to FS matching
+
+* TODO Abstract proxy further (ring-like middleware layers?)
