@@ -6,3 +6,5 @@ test:
 
 test-int:
 	./tests/integration.sh
+
+test-all: test-int test
