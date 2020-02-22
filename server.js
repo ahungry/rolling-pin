@@ -1,5 +1,6 @@
 const fs = require('fs')
 const http = require('http')
+const https = require('https')
 
 console.log('Running on port 12345')
 console.log('Try visiting http://0.0.0.0:12345')
@@ -22,7 +23,7 @@ req.end()
 
 // ex: /http://example.com/foo
 function makeOpts (url) {
-  const [_, protocol, hostname, path] = url.match(/\/(http[s]*?):\/\/(.*?)(\/.*)/)
+  const [_, protocol, hostname, path] = url.match(/\/(http[s]*?):\/\/(.*?)(\/(.*)|$)/)
 
   return {
     protocol,
@@ -37,7 +38,7 @@ function proxy (url, req, cb) {
   req.headers.host = hostname
 
   const options = {
-    path,
+    path: '/' + path,
     method: req.method,
     port: protocol === 'http' ? 80 : 443,
     hostname,
@@ -46,8 +47,9 @@ function proxy (url, req, cb) {
   const { postData } = req
 
   console.log('proxy request to: ', { options })
+  const client = protocol === 'http' ? http : https
 
-  const request = http.request(options, function (res) {
+  const request = client.request(options, function (res) {
     let content = ''
 
     res.setEncoding('utf8')
