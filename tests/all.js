@@ -21,3 +21,49 @@ assert.deepEqual(
     path: '',
   },
 )
+
+const transform = require('../lib/transform')
+
+assert.deepEqual(
+  transform.makePath({}, 'foo.bar.baz'),
+  { foo: { bar: { baz: {} } } },
+)
+
+assert.deepEqual(
+  transform.makePath({ foo: { bar: { baz: 3 } } }, 'foo.bar.baz'),
+  { foo: { bar: { baz: 3 } } },
+)
+
+assert.deepEqual(
+  transform.getVal({ foo: { bar: { baz: 3 } } }, 'foo.bar.baz'),
+  3,
+)
+
+assert.deepEqual(
+  transform.getVal({ foo: { bar: { baz: 3 } } }, 'foox.barx.bax'),
+  undefined,
+)
+
+const mapping = [
+  ['x', 'y'],
+]
+
+assert.deepEqual(
+  transform.transform(mapping)({ x: 1 }),
+  { y: 1 },
+)
+
+const mapping2 = [
+  ['x', 'y'],
+  ['foo.bar.baz', 'fooBarBaz'],
+]
+
+assert.deepEqual(
+  transform.transform(mapping2)({}),
+  { y: null, fooBarBaz: null },
+)
+
+assert.deepEqual(
+  transform.transform(mapping2)({ foo: { bar: { baz: 55 } } }),
+  { y: null, fooBarBaz: 55 },
+)
