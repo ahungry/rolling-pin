@@ -5,22 +5,6 @@ const https = require('https')
 console.log('Running on port 12345')
 console.log('Try visiting http://0.0.0.0:12345')
 
-const req = http.request('http://httpbin.org/ip', function (res) {
-  let content = ''
-
-  res.setEncoding('utf8')
-
-  res.on('data', (chunk) => {
-    content += chunk
-  })
-
-  res.on('end', () => {
-    console.log('All done, response was: ', content)
-  })
-})
-
-req.end()
-
 // ex: /http://example.com/foo
 function makeOpts (url) {
   const [_, protocol, hostname, path] = url.match(/\/(http[s]*?):\/\/(.*?)(\/(.*)|$)/)
