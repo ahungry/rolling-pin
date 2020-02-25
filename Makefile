@@ -4,6 +4,9 @@ start:
 test:
 	node ./tests/all.js
 
+test-mw:
+	node ./tests/mw.js
+
 test-int:
 	./tests/integration.sh
 
