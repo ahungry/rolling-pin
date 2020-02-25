@@ -53,14 +53,16 @@ function postProxy (cb) {
   const t = transform(mapping)
 
   return function (err, data) {
-    console.log('PROXY IS SENDING OUT: ', { data })
+    const { headers, body } = data
+    // console.log('PROXY IS SENDING OUT: ', { data })
 
-    const x = t(JSON.parse(data))
+    const x = t(body)
 
-    console.log('PROXY AFTER TRANSFORM IS: ', { x })
+    // console.log('PROXY AFTER TRANSFORM IS: ', { x })
 
     cb(err, {
       headers: {
+        ...headers,
         'content-type': 'application/json',
       },
       body: x
