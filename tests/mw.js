@@ -4,13 +4,14 @@ const mw = require('../lib/mw')
 
 assert.equal(1, 1)
 
-const basicHandler = handler => req => {
-  const res = handler(req)
+function basicHandler (handler) {
+  return async function (req) {
+    const res = await handler(req)
 
-  return {
-    ...res,
-    headers: null,
-    body: req.body.x + req.body.y,
+    return {
+      ...res,
+      body: req.body.x + req.body.y,
+    }
   }
 }
 
@@ -25,19 +26,37 @@ const req = {
 }
 
 // Essentially the same
-const c1 = mw.wrapCors(mw.wrapJsonReq(basicHandler(x => x)))
-const c2 = [
+const c1 = mw.wrapJsonReq(basicHandler(mw.wrapCors(_ => ({}))))
+const c2 = mw.wrapJsonReq(mw.wrapAsyncTest(mw.wrapCors(basicHandler(_ => ({})))))
+
+const c3 = [
   mw.wrapCors,
   mw.wrapJsonReq,
-  basicHandler(x => x),
+  mw.wrapAsyncTest,
+  basicHandler(mw.init),
 ].reverse().reduce((acc, cur) => cur(acc))
 
-assert.deepEqual(
-  c1(req),
-  { body: 3, headers: { 'Access-Control-Allow-Origin': '*' } },
-)
+void async function main() {
+  const result1 = await c1(req)
 
-assert.deepEqual(
-  c2(req),
-  { body: 3, headers: { 'Access-Control-Allow-Origin': '*' } },
-)
+  assert.deepEqual(
+    result1,
+    { body: 3, headers: { 'Access-Control-Allow-Origin': '*' } },
+  )
+
+  const result2 = await c2(req)
+
+  assert.deepEqual(
+    result2,
+    { body: 3, headers: { 'Access-Control-Allow-Origin': '*' }, slowness: 3 },
+  )
+
+  const result3 = await c3(req)
+
+  assert.deepEqual(
+    result3,
+    { body: 3, headers: { 'Access-Control-Allow-Origin': '*' }, slowness: 3 },
+  )
+
+  console.log('all done!')
+}().catch(console.error)
