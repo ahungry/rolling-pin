@@ -29,6 +29,7 @@ html, body {
 
 .tree-key {
   border-bottom: 1px dotted #444;
+  border-left: 1px dotted #333;
   color: #fff;
   font-family: sans-serif;
   padding: 3px;
@@ -43,6 +44,7 @@ html, body {
 
 .tk-active {
   border-bottom: 1px dotted #eee;
+  border-left: 1px dotted #eee;
   color: #af0;
 }
 
