@@ -9,46 +9,85 @@
     <title>Rolling Pin</title>
   </head>
   <body>
-    <h1>Rolling Pin</h1>
+    <p class="blurb">
+      Often times we have to deal with data in complex formats
+      involving heavy nesting.  This becomes very error prone
+      when code doesn't properly validate the full property path
+      (in particular in dynamic languages such as nodejs).
+    </p>
 
-    <p>Flatten out nasty nested JSON into something simpler and smoother.</p>
+    <pre class="sample">
+function myLogic (foreignObject) {
+  const myNewObject = {
+    blub: foreignObject.blubWrapper.flub.blub,
+    flub: foreignObject.blubWrapper.flub.flub,
+    foo: foreignObject.foo,
+    bar: foreignObject.foo.bar,
+  }
+  // something would happen here, but foreignObject had a missing
+  // node in the property path!
+}
+    </pre>
 
-    Upload a JSON file: <input type="file" id="json-file">
+    <br style="clear:both;" />
 
-    Auto-name strategy:
-    <select id="auto-name">
-      <option value="short">short</option>
-      <option value="short-snake">Short Snake Case</option>
-      <option selected="true" value="short-camel">Short Camel Case</option>
-      <option value="long-snake">Long Snake Case</option>
-      <option value="long-camel">Long Camel Case</option>
-    </select>
+    <div id="menu">
+      <h1>Rolling Pin</h1>
 
-    Short context level:
-    <select id="short-context-level">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option selected="true" value="3">3</option>
-    </select>
+      <div>
+        Upload a JSON file: <input type="file" id="json-file">
+      </div>
+
+      <div>
+        Auto-name strategy:
+        <select id="auto-name">
+          <option value="short">short</option>
+          <option value="short-snake">Short Snake Case</option>
+          <option selected="true" value="short-camel">Short Camel Case</option>
+          <option value="long-snake">Long Snake Case</option>
+          <option value="long-camel">Long Camel Case</option>
+        </select>
+      </div>
+
+      <div>
+        Short context level:
+        <select id="short-context-level">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option selected="true" value="3">3</option>
+        </select>
+      </div>
+    </div>
+
+    <h3>With Rolling Pin, you can easily treat these input/output object
+      maps as data, instead of bungling it with your code.</h3>
+
+    <p class="margin">
+      First, upload your own JSON.
+      Second, personalize the mapping of that data.
+      Third, copy the "Currently mapped aliases" and use one of
+      the available <a href="#" onclick="alert('Coming soon!')">libs</a>
+      to seamlessly integrate this into your own codebase!
+    </p>
 
     <div class="half left">
-      <h3>Messy, nested, bumpy (click a node to make an alias to it):</h3>
-
+      Before:
       <div class="code">
         {<pre id="code"></pre>}
       </div>
     </div>
 
     <div class="half right">
-      <h3>Clean and simple (click a value to set it - see how it changes in both spots!):</h3>
-
+      After:
       <div class="code">
         {<pre id="clean-code"></pre>}
       </div>
+
+      <h3>Currently mapped aliases:</h3>
+      <code id="aliases"></code>
     </div>
 
-    <h3>Currently mapped aliases:</h3>
-    <div id="aliases"></div>
+    <br style="clear:both;" />
 
   </body>
   <script src="index.js"></script>

@@ -7,7 +7,7 @@ let json = {
       "fullName": "Matthew Carter",
       "uuid": "abc-123"
     },
-    "physicalCharacteristics": {
+    "physical": {
       "head": {
         "eyes": {
           "left": {

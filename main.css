@@ -9,6 +9,7 @@
 html, body {
   font-family: 'Gotham', 'Raleway', 'Roboto', 'Helvetica', 'Arial', sans-serif;
   font-size: 1.0rem;
+  margin: 0;
 }
 
 .code {
@@ -38,10 +39,6 @@ html, body {
   clear:both;
 }
 
-.tree-key input {
-  color: #000;
-}
-
 .tk-active {
   border-bottom: 1px dotted #eee;
   border-left: 1px dotted #eee;
@@ -54,22 +51,12 @@ html, body {
 }
 
 .half {
-  bottom: 10px;
-  margin-bottom: 1%;
-  position: absolute;
-  height: 50%;
-  width: 50%;
+  float: left;
+  margin: 1%;
+  width: 48%;
 }
 
-.half.left {
-  left: 10px;
-}
-
-.half.right {
-  margin-left: 50%;
-}
-
-input {
+.tree-key input {
   border-radius: 3px;
   color: #000;
   cursor: pointer;
@@ -85,22 +72,54 @@ input:hover {
   padding: 1px !important;
 }
 
+.blurb {
+  background-image: linear-gradient(to right, #eee, #fff );
+  float: left;
+  font-family: serif;
+  line-height: 2.2rem;
+  padding: 3rem;
+  width: 50%;
+}
+
+.sample {
+  color: #999;
+  font-size: 1.0rem;
+  float: left;
+}
+
+#menu {
+  background: #333;
+  color: #fa0;
+  padding: 2rem;
+}
+
+#menu h1 {
+  float: left;
+}
+
+#menu div {
+  display: inline-block;
+  width: 30%;
+}
+
+.margin {
+  margin: 1rem;
+}
+
 /* If width is less than 600 do this stuff */
-@media (max-width: 600px)
+@media (max-width: 1024px)
 {
   .half {
     position: relative;
-    width: 100%;
+    width: 90%;
   }
 
-  .half.left {
+  #menu div {
+    display: block !important;
+    text-align: right;
+    width: 90% !important;
   }
 
-  .half.right {
-    margin-left: 0%;
-  }
-
-  .code {
-    height: 300px;
-  }
+  .blurb { width: 80%; }
+  .sample { font-size: 0.7rem; }
 }
