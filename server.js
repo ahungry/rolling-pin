@@ -62,7 +62,9 @@ function postProxy (cb) {
 
     cb(err, {
       headers: {
-        ...headers,
+        // FIXME: We can't forward the headers or it changes the
+        // potential outbound size etc.
+        // ...headers,
         'content-type': 'application/json',
       },
       body: x
