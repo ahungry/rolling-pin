@@ -47,8 +47,9 @@ function postProxy (cb) {
   // TODO: Just hardcoding a sample translator
   // curl http://0.0.0.0:12345/https://httpbin.org/post -XPOST -d '{"sentinel": 1}' -D-
   const mapping = [
-    ['headers.Host', 'my-host'],
-    ['origin', 'my-origin'],
+    ['headers.Host'  , 'my-host'],
+    ['origin'        , 'my-origin'],
+    ['json.sentinel' , 'my-sentinel'],
   ]
   const t = transform(mapping)
 
