@@ -4,7 +4,6 @@ const pathAliases = []
 let json = {
   "person": {
     "info": {
-      "hint": "Click 'name' and enter name in the prompt, then 'uuid' and enter 'id'.",
       "fullName": "Matthew Carter",
       "uuid": "abc-123"
     },
@@ -12,11 +11,9 @@ let json = {
       "head": {
         "eyes": {
           "left": {
-            "hint": "Click 'color' and enter 'leftEye' in the prompt.",
             "color": "blue"
           },
           "right": {
-            "hint": "Click 'color' and enter 'rightEye' in the prompt.",
             "color": "blue"
           }
         }
@@ -79,18 +76,20 @@ function getDefaultAlias (path) {
 }
 
 function loadedJsonOnClick (e) {
+  if ('INPUT' !== e.target.tagName) return
   const path = e.target.title
+  const val = makeVal(json, path)
+
+  if ('object' === typeof val) {
+    // alert('Only scalars supported for now, please try clicking the end of a branch/set of nodes.')
+
+    return
+  }
+
   const alias = prompt(
     'Choose your new path: ',
     getDefaultAlias(path),
   )
-  const val = makeVal(json, path)
-
-  if ('object' === typeof val) {
-    alert('Only scalars supported for now, please try clicking the end of a branch/set of nodes.')
-
-    return
-  }
 
   pathAliases.push([path, alias])
   flatJson[alias] = val
@@ -111,6 +110,7 @@ function getOriginalPath (path) {
 }
 
 function flatJsonOnClick (e) {
+  if ('INPUT' !== e.target.tagName) return
   const path = e.target.title
   const val = makeVal(flatJson, path)
   const newVal = prompt('Choose a new value to set this to: ', val)
@@ -128,18 +128,19 @@ function renderTree (onClick, parent, m, path = []) {
   keys.forEach(k => {
     const el = document.createElement('div')
     const val = m[k]
+    const title = [...path, k].join('.')
 
-    el.title = [...path, k].join('.')
+    el.title = title
     el.className = 'tree-key'
     el.innerHTML = `"${k}": `
 
     el.onmouseover = (e) => {
-      e.stopPropagation()
+      // e.stopPropagation()
       e.target.className = 'tree-key tk-active'
     }
 
     el.onmouseout = (e) => {
-      e.stopPropagation()
+      // e.stopPropagation()
       e.target.className = 'tree-key'
     }
 
@@ -158,7 +159,12 @@ function renderTree (onClick, parent, m, path = []) {
         el.innerHTML += '}'
       }
     } else {
-      el.innerHTML += `"${val}"`
+      // el.innerHTML += `"${val}" <input type="button" value="${val}" />`
+      el.innerHTML += `"${val}" <input
+  onmouseover="this.parentNode.className='tree-key tk-active'"
+  onmouseout="this.parentNode.className='tree-key'"
+  class="tree-key"
+  title="${title}" type="button" value="${title}" />`
     }
   })
 }

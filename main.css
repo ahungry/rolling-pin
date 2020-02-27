@@ -28,16 +28,21 @@ html, body {
 }
 
 .tree-key {
+  border-bottom: 1px dotted #444;
   color: #fff;
-  display: block;
   font-family: sans-serif;
   padding: 3px;
   padding-left: 30px;
   cursor: pointer;
+  clear:both;
+}
+
+.tree-key input {
+  color: #000;
 }
 
 .tk-active {
-  background-image: linear-gradient(to right, rgba(0, 155, 0, 0.5), transparent );
+  border-bottom: 1px dotted #eee;
   color: #af0;
 }
 
@@ -60,6 +65,22 @@ html, body {
 
 .half.right {
   margin-left: 50%;
+}
+
+input {
+  border-radius: 3px;
+  color: #000;
+  cursor: pointer;
+  display: inline-block;
+  font-family: serif !important;
+  padding: 1px !important;
+  float:right;
+}
+
+input:hover {
+  background-image: linear-gradient(to bottom, #af0, #fff );
+  border-radius: 3px;
+  padding: 1px !important;
 }
 
 /* If width is less than 600 do this stuff */
