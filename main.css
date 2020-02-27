@@ -85,6 +85,8 @@ input:hover {
   color: #999;
   font-size: 1.0rem;
   float: left;
+  overflow-x: scroll;
+  max-width: 100%;
 }
 
 #menu {
@@ -111,7 +113,7 @@ input:hover {
 {
   .half {
     position: relative;
-    width: 90%;
+    width: 96%;
   }
 
   #menu div {
@@ -122,4 +124,10 @@ input:hover {
 
   .blurb { width: 80%; }
   .sample { font-size: 0.7rem; }
+  h3 {
+    padding: 6px;
+  }
+  code {
+    max-width: 100%;
+  }
 }
