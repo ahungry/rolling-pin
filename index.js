@@ -1,3 +1,4 @@
+let lastUploadedName = 'sample.json'
 const flatJson = {}
 const jsonFile = document.getElementById('json-file')
 const pathAliases = []
@@ -123,6 +124,8 @@ function flatJsonOnClick (e) {
 }
 
 function renderTree (onClick, parent, m, path = []) {
+  if ('object' !== typeof m || null === m) return
+
   const keys = Object.keys(m)
 
   keys.forEach(k => {
@@ -218,7 +221,7 @@ function sendFile (fileData, fileName) {
 }
 
 function downloadAliases () {
-  sendFile(JSON.stringify(pathAliases, null, 4), 'aliases.json')
+  sendFile(JSON.stringify(pathAliases, null, 4), 'aliases-for-' + lastUploadedName)
 }
 
 function boot () {
@@ -228,6 +231,7 @@ function boot () {
     const files = this.files
 
     console.debug('received some files: ', files.length)
+    lastUploadedName = e.target.value.split('\\').reverse()[0]
 
     const fr = new FileReader()
 
