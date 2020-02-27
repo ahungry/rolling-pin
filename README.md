@@ -50,6 +50,6 @@ With two-way data-mapping.
 
 Copyright © 2020 Matthew Carter <m@ahungry.com>
 
-Distributed under the GNU Affero General Public License version 3.0 (AGPLv3).
+Distributed under the GNU General Public License version 3.0 (GPLv3).
 
 See [LICENSE](https://github.com/ahungry/rolling-pin/blob/master/LICENSE) for details and exceptions.
