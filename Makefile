@@ -10,4 +10,4 @@ test-mw:
 test-int:
 	./tests/integration.sh
 
-test-all: test-int test
+test-all: test-int test-mw test
