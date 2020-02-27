@@ -1,11 +1,10 @@
 # Rolling Pin
 
-
 Flatten out nasty nested JSON into something simpler and smoother.
 
 Try it out at: http://rolling-pin.ahungry.com/
 
-Interactively (GUI) turn this:
+Interactively (GUI or code lib) turn this:
 
 ```json
 {
@@ -45,6 +44,36 @@ into this:
 ```
 
 With two-way data-mapping.
+
+# Libs
+
+You can clone this repo and use lib/transform.js in your own codebase
+as such (will be published on npm soon):
+
+```javascript
+const { transform } = require('./lib/transform')
+
+const mapping = [
+  ['headers.Host'  , 'host'],
+  ['origin'        , 'origin'],
+  ['json.sentinel' , 'sentinel'],
+]
+const t = transform(mapping)
+
+const x = t({
+  headers: { Host: 'some-host' },
+  origin: 'some-origin',
+  json: { sentinel: 'some-sentinel' },
+})
+
+// Which will produce x as follows:
+{
+  host: 'some-host',
+  origin: 'some-origin',
+  sentinel: 'some-sentinel'
+}
+
+```
 
 # License
 
