@@ -195,6 +195,32 @@ function renderAliases () {
   })
 }
 
+function sendFile (fileData, fileName) {
+  const blob = new Blob(
+    [fileData],
+    {
+      type : "text/plain;charset=utf-8",
+    },
+  )
+  const element = document.createElement('a')
+  element.setAttribute(
+    'href',
+    URL.createObjectURL(blob),
+  )
+  element.setAttribute('download', fileName)
+
+  element.style.display = 'none'
+  document.body.appendChild(element)
+
+  element.click()
+
+  document.body.removeChild(element)
+}
+
+function downloadAliases () {
+  sendFile(JSON.stringify(pathAliases, null, 4), 'aliases.json')
+}
+
 function boot () {
   jsonFile.addEventListener('change', function (e) {
     console.debug('jsonFile change', { e })
