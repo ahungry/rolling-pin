@@ -92,11 +92,13 @@ input:hover {
 #menu {
   background: #333;
   color: #fa0;
-  padding: 2rem;
+  padding: 10px;
 }
 
-#menu h1 {
-  float: left;
+h1 {
+  background: #333;
+  color: #fa0;
+  margin: 0;
 }
 
 #menu div {
