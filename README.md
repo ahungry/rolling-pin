@@ -47,11 +47,27 @@ With two-way data-mapping.
 
 # Libs
 
-You can clone this repo and use lib/transform.js in your own codebase
-as such (will be published on npm soon):
+Add to your project with:
+
+```shell
+npm install rolling-pin || yarn add rolling-pin
+```
+
+## Simple example
+
 
 ```javascript
-const { transform } = require('./lib/transform')
+const { transform } = require('rolling-pin')
+
+console.log(transform([['a.b', 'x.y']])({a: { b: 3 }}))
+
+// { x: { y: 3 } }
+```
+
+## More complex example
+
+```javascript
+const { transform } = require('rolling-pin')
 
 const mapping = [
   ['headers.Host'  , 'host'],
