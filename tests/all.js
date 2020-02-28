@@ -56,25 +56,29 @@ assert.deepEqual(
 const mapping2 = [
   ['x', 'y'],
   ['foo.bar.baz', 'fooBarBaz'],
-  ['foo.flub.baz', 'fooFlubBaz'],
+  ['foo.flub.baz', 'fooFlubBaz', 999],
 ]
 
 assert.deepEqual(
   transform.transform(mapping2)({}),
-  { y: null, fooBarBaz: null, fooFlubBaz: null },
+  { y: null, fooBarBaz: null, fooFlubBaz: 999 },
 )
 
 assert.deepEqual(
   transform.transform(mapping2)({ foo: { bar: { baz: 55 } } }),
-  { y: null, fooBarBaz: 55, fooFlubBaz: null },
+  { y: null, fooBarBaz: 55, fooFlubBaz: 999 },
 )
 
-const mapping3 = mapping2.map(x => [...x].reverse())
+const mapping3 = [
+  ['y', 'x'],
+  ['fooBarBaz', 'foo.bar.baz'],
+  ['fooFlubBaz', 'foo.flub.baz', 999],
+]
 
 // Now test out the flipped map logic (other direction).
 assert.deepEqual(
   transform.transform(mapping3)({}),
-  { x: null, foo: { bar: { baz: null }, flub: { baz: null } } },
+  { x: null, foo: { bar: { baz: null }, flub: { baz: 999 } } },
 )
 
 assert.deepEqual(
