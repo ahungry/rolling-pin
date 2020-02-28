@@ -2,7 +2,7 @@
   "name": "rolling-pin",
   "version": "0.0.1",
   "description": "Flatten nested objects into something smoother.",
-  "main": "server.js",
+  "main": "lib.js",
   "repository": "git@github.com:ahungry/rolling-pin.git",
   "author": "Matthew Carter <m@ahungry.com>",
   "license": "GPL-3.0-or-later",
