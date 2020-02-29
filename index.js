@@ -147,6 +147,8 @@ function loadedJsonOnClick (e) {
     getDefaultAlias(path),
   )
 
+  if (null === alias) return
+
   pathAliases.push([path, alias])
   flatJson = transform(pathAliases)(json)
   //flatJson[alias] = val
