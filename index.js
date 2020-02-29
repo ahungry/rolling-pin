@@ -1,5 +1,60 @@
+// BEGIN from lib/transform
+function makePath (m, path) {
+  const keys = path.split('.')
+  let node = m
+
+  for (let i = 0; i < keys.length; i++) {
+    const k = keys[i]
+
+    if (undefined === node[k]) {
+      node[k] = {}
+    }
+
+    node = node[k]
+  }
+
+  return m
+}
+
+function getVal (m, path, def = null) {
+  try {
+    return path.split('.').reduce((acc, cur) => acc[cur], m) || def
+  } catch (_) {
+    return def
+  }
+}
+
+function setVal (m, path, val) {
+  const keys = path.split('.')
+  let next = m
+
+  for (let i = 0; i < keys.length - 1; i++) {
+    next = next[keys[i]]
+  }
+
+  // Stop at the last object, as those are by reference, while individual keys are not.
+  next[keys.reverse().slice(0, 1)] = undefined === val ? null : val
+}
+
+function transform (mapping) {
+  return function (a) {
+    let out = {}
+
+    mapping.forEach(([apath, bpath, def]) => {
+      const val = getVal(a, apath, def)
+
+      makePath(out, bpath)
+      setVal(out, bpath, val)
+    })
+
+    return out
+  }
+}
+
+// END from lib/transform
+
 let lastUploadedName = 'sample.json'
-const flatJson = {}
+let flatJson = {}
 const jsonFile = document.getElementById('json-file')
 const pathAliases = []
 let json = {
@@ -77,15 +132,15 @@ function getDefaultAlias (path) {
 }
 
 function loadedJsonOnClick (e) {
-  if ('INPUT' !== e.target.tagName) return
+  // if ('INPUT' !== e.target.tagName) return
   const path = e.target.title
   const val = makeVal(json, path)
 
-  if ('object' === typeof val) {
-    // alert('Only scalars supported for now, please try clicking the end of a branch/set of nodes.')
+  // if ('object' === typeof val) {
+  //   // alert('Only scalars supported for now, please try clicking the end of a branch/set of nodes.')
 
-    return
-  }
+  //   return
+  // }
 
   const alias = prompt(
     'Choose your new path: ',
@@ -93,7 +148,8 @@ function loadedJsonOnClick (e) {
   )
 
   pathAliases.push([path, alias])
-  flatJson[alias] = val
+  flatJson = transform(pathAliases)(json)
+  //flatJson[alias] = val
   renderFlatJson()
   renderAliases()
 }
@@ -129,6 +185,7 @@ function renderTree (onClick, parent, m, path = []) {
   const keys = Object.keys(m)
 
   keys.forEach(k => {
+    if ('' === k) return
     const el = document.createElement('div')
     const val = m[k]
     const title = [...path, k].join('.')
@@ -202,7 +259,7 @@ function sendFile (fileData, fileName) {
   const blob = new Blob(
     [fileData],
     {
-      type : "text/plain;charset=utf-8",
+      type: "text/plain;charset=utf-8",
     },
   )
   const element = document.createElement('a')
