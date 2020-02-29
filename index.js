@@ -55,8 +55,8 @@ function transform (mapping) {
 
 let lastUploadedName = 'sample.json'
 let flatJson = {}
+let pathAliases = []
 const jsonFile = document.getElementById('json-file')
-const pathAliases = []
 let json = {
   "person": {
     "info": {
@@ -298,7 +298,11 @@ function boot () {
       const { result } = e.target
 
       json = JSON.parse(result)
+      flatJson = {}
+      pathAliases = []
+
       renderJson()
+      renderFlatJson()
     }
 
     fr.readAsText(files[0])
